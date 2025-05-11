@@ -1,12 +1,13 @@
 FROM n8nio/n8n:latest
 
-
-# Install Python and yt-dlp
-RUN apk add --no-cache python3 py3-pip \
-    && pip3 install --upgrade yt-dlp
-
-# (rest of your Dockerfile)
 USER root
-RUN apk update && apk add --no-cache ffmpeg
+
+# Install ffmpeg and wget
+RUN apk add --no-cache ffmpeg wget
+
+# Download yt-dlp binary to /usr/local/bin
+RUN wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp \
+    && chmod a+rx /usr/local/bin/yt-dlp
 
 USER node
+
